@@ -8,6 +8,9 @@
         android:requiredFeature="android.hardware.telephony" />
 
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
 
     <application
         android:allowBackup="true"
@@ -33,7 +36,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBbJEN8nBj6i-qP8beG4gwFQluaa9-w0nY" />
+            android:value="AIzaSyCOUNbQX978BzB0qDDKvazIGwz44cB3AkI" />
 
         <activity
             android:name=".GoogleMaps"

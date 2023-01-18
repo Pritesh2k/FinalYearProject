@@ -1,7 +1,14 @@
 package com.example.finalyearproject;
 
+import static android.Manifest.*;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -43,9 +50,22 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        // Add a marker in London and move the camera
+        LatLng sydney = new LatLng(51.509865, -0.118092);
+        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in London"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+        enableMyLocation();
+    }
+
+    private void enableMyLocation(){
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (mMap != null) {
+                mMap.setMyLocationEnabled(true);
+            }
+        } else {
+            String Permissions [] = {"android.permission.ACCESS_FINE_LOCATION"};
+            ActivityCompat.requestPermissions(this, Permissions, 200);
+        }
     }
 }

@@ -17,13 +17,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.common.cache.Cache;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     TextView ALERT_MESSAGE;
 
     //Variable
-    boolean RESTRICT_UPDATING_DB = false;
+    boolean RESTRICT_UPDATING_DB = true;
     boolean isAlertMessage_ACTIVE = true;
     boolean ALERT_MSG_ACTIVE = true;
 
@@ -89,6 +87,10 @@ public class MainActivity extends AppCompatActivity {
         GO_TO_MAP_BTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                //Accessing Internet and Location
+
+
                 Intent intent = new Intent();
                 intent.setClass(getApplicationContext(), GoogleMaps.class);
                 startActivity(intent);
@@ -116,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
                 //Creating new intent and establishing the data
                 try {
                     //Making the call
-                    Intent safteyButton_Intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:12345678901"));
+                    Intent safteyButton_Intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:999"));
                     startActivity(safteyButton_Intent);
                 } catch (Exception e){
                     Toast.makeText(getApplicationContext(), "Call UnSuccessful", Toast.LENGTH_LONG).show();
@@ -125,17 +127,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
         if (RESTRICT_UPDATING_DB == true) {
+
             //Writing to the Firebase DB
             Map<String, Object> RecentCrime = new HashMap<>();
-            RecentCrime.put("Longitude", "-0.09154");
-            RecentCrime.put("Latitude", "51.511896");
-            RecentCrime.put("Location", "On or near Cannon Street");
-            RecentCrime.put("Crime type", "Drugs");
-            RecentCrime.put("Last outcome category", "Awaiting court outcome");
-
 
             db.collection("December2022")
-                    .add(RecentCrime)
+                    .add(AddToDB(RecentCrime))
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
@@ -168,5 +165,16 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    public static Map<String, Object> AddToDB(Map<String, Object> RecentCrime){
+
+        RecentCrime.put("Longitude", "-0.09154");
+        RecentCrime.put("Latitude", "51.511896");
+        RecentCrime.put("Location", "On or near Cannon Street");
+        RecentCrime.put("Crime type", "Drugs");
+        RecentCrime.put("Last outcome category", "Awaiting court outcome");
+
+        return RecentCrime;
     }
 }
