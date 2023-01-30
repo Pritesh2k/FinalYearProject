@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class PoliceData {
+
+    static MainActivity mainActivity;
+
     private static String file_path = "E://FYP/2022-11-city-of-london-street - 2022-11-city-of-london-street.csv";
 
     public static ArrayList<String> Longitude = new ArrayList<>();
@@ -17,6 +20,12 @@ public class PoliceData {
     public static ArrayList<String> LOC_messages = new ArrayList<String>();
     public static ArrayList<String> PackagedData = new ArrayList<>();
     public static int Length_Of_DataSet;
+
+    public static boolean GetCrimeData = true;
+
+    public static void main(String[] args) {
+
+    }
 
     public static void CreateLOCMEssages(){
         LOC_messages.add("Action to be taken by another organisation");
@@ -30,46 +39,69 @@ public class PoliceData {
         LOC_messages.add("Not data found");
     }
 
-    public static void GetCrimedata(){
+    public static void GetCrimeData(){
         getCrimeData();
         getLOCData();
         Length_Of_DataSet = Location.size();
     }
 
-    public static ArrayList<String> PackagedData(){
+    public static void PackagedData(){
+
         for (int counter = 1; counter < CrimeType.size(); counter++) {
 
-            if (counter < Latitude.size() && counter < Longitude.size()) {
-                PackagedData.add(CrimeType.get(counter));
-                PackagedData.add(Longitude.get(counter));
-                PackagedData.add(Latitude.get(counter));
-                PackagedData.add(Location.get(counter));
+            //Adding
+            PackagedData.add(CrimeType.get(counter));
+            PackagedData.add(Longitude.get(counter));
+            PackagedData.add(Latitude.get(counter));
+            PackagedData.add(Location.get(counter));
 
-                if (LOC.get(counter).equals("1")) {
-                    PackagedData.add(LOC_messages.get(0));
-                } else if (LOC.get(counter).equals("2")) {
-                    PackagedData.add(LOC_messages.get(1));
-                } else if (LOC.get(counter).equals("3")) {
-                    PackagedData.add(LOC_messages.get(2));
-                } else if (LOC.get(counter).equals("4")) {
-                    PackagedData.add(LOC_messages.get(3));
-                } else if (LOC.get(counter).equals("5")) {
-                    PackagedData.add(LOC_messages.get(4));
-                } else if (LOC.get(counter).equals("6")) {
-                    PackagedData.add(LOC_messages.get(5));
-                } else if (LOC.get(counter).equals("7")) {
-                    PackagedData.add(LOC_messages.get(6));
-                } else if (LOC.get(counter).equals("8")) {
-                    PackagedData.add(LOC_messages.get(7));
-                } else if (LOC.get(counter).equals("9")) {
-                    PackagedData.add(LOC_messages.get(8));
-                }
-
-                return PackagedData;
+            if (LOC.get(counter).equals("1")) {
+                //System.out.println(LOC_messages.get(0));
+                PackagedData.add(LOC_messages.get(0));
+            } else if (LOC.get(counter).equals("2")) {
+                //System.out.println(LOC_messages.get(1));
+                PackagedData.add(LOC_messages.get(1));
+            } else if (LOC.get(counter).equals("3")) {
+                //System.out.println(LOC_messages.get(2));
+                PackagedData.add(LOC_messages.get(2));
+            } else if (LOC.get(counter).equals("4")) {
+                //System.out.println(LOC_messages.get(3));
+                PackagedData.add(LOC_messages.get(3));
+            } else if (LOC.get(counter).equals("5")) {
+                //System.out.println(LOC_messages.get(4));
+                PackagedData.add(LOC_messages.get(4));
+            } else if (LOC.get(counter).equals("6")) {
+                //System.out.println(LOC_messages.get(5));
+                PackagedData.add(LOC_messages.get(5));
+            } else if (LOC.get(counter).equals("7")) {
+                //System.out.println(LOC_messages.get(6));
+                PackagedData.add(LOC_messages.get(6));
+            } else if (LOC.get(counter).equals("8")) {
+                //System.out.println(LOC_messages.get(7));
+                PackagedData.add(LOC_messages.get(7));
+            } else if (LOC.get(counter).equals("9")) {
+                //System.out.println(LOC_messages.get(8));
+                PackagedData.add(LOC_messages.get(8));
             }
+
+            if (PackagedData.get(0).equals("Crime type")) { //Prevents Duplications
+                break;
+            } else {
+                //AddToDB(counter, PackagedData);
+                //mainActivity.AddToDB(PackagedData);
+                PackagedData.clear();
+            }
+
         }
-        return null;
+        GetCrimeData = false;
     }
+
+//    public static void AddToDB(int num, ArrayList<String> PackagedData_New) {
+//        System.out.println(num);
+//        for (int counter = 0; counter < PackagedData_New.size(); counter++) {
+//            System.out.println(PackagedData_New.get(counter));
+//        }
+//    }
 
     public static void getCrimeData() {
         try (BufferedReader br = new BufferedReader(new FileReader(file_path))) {
