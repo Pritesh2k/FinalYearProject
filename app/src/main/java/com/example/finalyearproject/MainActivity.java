@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
 
     //Referencing Database Instance
     static FirebaseFirestore db = FirebaseFirestore.getInstance();
-    WriteBatch Batch = db.batch();
 
     //Referencing Button Components
     Button GO_TO_MAP_BTN;
@@ -57,13 +56,11 @@ public class MainActivity extends AppCompatActivity {
     //Classes
     PoliceData policeData;
 
-    @SuppressLint({"WrongThread", "MissingInflatedId"})
+    @SuppressLint("WrongThread")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //Initialising the LOC Message for Database & Getting Crime Data
 
         //Considering the state of the Alert Message Pop Up and setting up the Vibration
         ALERT_MESSAGE = (TextView) findViewById(R.id.ALERT_MESSAGE);
