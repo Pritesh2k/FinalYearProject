@@ -1,16 +1,25 @@
 package com.example.finalyearproject;
 
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class PoliceData {
 
-    static MainActivity mainActivity;
-
     private static String file_path = "E://FYP/2022-11-city-of-london-street - 2022-11-city-of-london-street.csv";
-
+    static MainActivity mainActivity;
     public static ArrayList<String> Longitude = new ArrayList<>();
     public static ArrayList<String> Latitude = new ArrayList<>();
     public static ArrayList<String> Location = new ArrayList<>();
@@ -87,21 +96,12 @@ public class PoliceData {
             if (PackagedData.get(0).equals("Crime type")) { //Prevents Duplications
                 break;
             } else {
-                //AddToDB(counter, PackagedData);
-                //mainActivity.AddToDB(PackagedData);
                 PackagedData.clear();
             }
 
         }
         GetCrimeData = false;
     }
-
-//    public static void AddToDB(int num, ArrayList<String> PackagedData_New) {
-//        System.out.println(num);
-//        for (int counter = 0; counter < PackagedData_New.size(); counter++) {
-//            System.out.println(PackagedData_New.get(counter));
-//        }
-//    }
 
     public static void getCrimeData() {
         try (BufferedReader br = new BufferedReader(new FileReader(file_path))) {
@@ -152,5 +152,31 @@ public class PoliceData {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void GetFirebaseDocuments(){
+        //Reading from the Firebase DB
+        mainActivity.db.collection("November-2022")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                mainActivity.CRIME_TYPE.setText(document.getString("Crime Type"));
+                                mainActivity.LOCATION.setText(document.getString("Location"));
+                                mainActivity.LONGITUDE.setText(document.getString("Longitude"));
+                                mainActivity.LATITUDE.setText(document.getString("Latitude"));
+                                mainActivity.OUTCOME.setText(document.getString("Last Outcome Catagory"));
+                                mainActivity.SOURCE.setText("Police.Data.UK");
+
+                                //mainActivity.DebugText.setText(document.getString("Crime Type"));
+                            }
+                        } else {
+                            Toast.makeText(mainActivity.getApplicationContext(),"UnSuccessful", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
     }
 }

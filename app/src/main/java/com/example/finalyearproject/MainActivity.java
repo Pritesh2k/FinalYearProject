@@ -1,5 +1,9 @@
 package com.example.finalyearproject;
 
+import static android.content.ContentValues.TAG;
+
+//import static com.example.finalyearproject.PoliceData.FirebaseDocuments;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,27 +29,34 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
 
+import org.checkerframework.checker.units.qual.C;
+import org.w3c.dom.Text;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
     //Referencing Database Instance
-    static FirebaseFirestore db = FirebaseFirestore.getInstance();
+    public static FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     //Referencing Button Components
     Button GO_TO_MAP_BTN;
+    Button DO_TO_DEBUG;
     Button POP_UP_BTN;
     Button SAFTEY_BTN;
 
     //Referencing Text Components
-    TextView CRIME_TYPE;
-    TextView LOCATION;
-    TextView LONGITUDE;
-    TextView LATITUDE;
-    TextView SOURCE;
-    TextView OUTCOME;
+    public static TextView CRIME_TYPE;
+    public static TextView LOCATION;
+    public static TextView LONGITUDE;
+    public static TextView LATITUDE;
+    public static TextView SOURCE;
+    public static TextView OUTCOME;
+//    public static TextView DebugText;
 
     TextView ALERT_MESSAGE;
 
@@ -56,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     //Classes
     PoliceData policeData;
 
-    @SuppressLint("WrongThread")
+    @SuppressLint({"WrongThread", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         ALERT_MESSAGE = (TextView) findViewById(R.id.ALERT_MESSAGE);
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
-        if(isAlertMessage_ACTIVE == true) { //Alert Message is active
+        if (isAlertMessage_ACTIVE == true) { //Alert Message is active
             // Set the new state
             ALERT_MESSAGE.setVisibility(View.VISIBLE);
 
@@ -89,9 +100,10 @@ public class MainActivity extends AppCompatActivity {
         LATITUDE = (TextView) findViewById(R.id.Latitude_Data);
         SOURCE = (TextView) findViewById(R.id.Source_Data);
         OUTCOME = (TextView) findViewById(R.id.Outcome_Data);
+        //DebugText = (TextView) findViewById(R.id.Debug_Testing);
 
         //On click listener allowing user to click the button to show map
-        GO_TO_MAP_BTN = (Button) findViewById(R.id.button);
+        GO_TO_MAP_BTN = (Button) findViewById(R.id.button3);
         GO_TO_MAP_BTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,9 +114,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Go To Debug Page
+        DO_TO_DEBUG = (Button) findViewById(R.id.Debugging);
+        DO_TO_DEBUG.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(getApplicationContext(), DebugLog.class);
+                startActivity(intent);
+            }
+        });
+
         //Creating a manual Pop Up Message (MUST incorporate later FULLY along with predication ect...
         POP_UP_BTN = (Button) findViewById(R.id.pop_up);
-        if (ALERT_MSG_ACTIVE == true){
+        if (ALERT_MSG_ACTIVE == true) {
             POP_UP_BTN.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -125,31 +148,13 @@ public class MainActivity extends AppCompatActivity {
                     //Making the call
                     Intent safteyButton_Intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:999"));
                     startActivity(safteyButton_Intent);
-                } catch (Exception e){
+                } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), "Call UnSuccessful", Toast.LENGTH_LONG).show();
                 }
             }
         });
 
         //Reading from the Firebase DB
-        db.collection("November-2022")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                CRIME_TYPE.setText(document.getString("Crime Type"));
-                                LOCATION.setText(document.getString("Location"));
-                                LONGITUDE.setText(document.getString("Longitude"));
-                                LATITUDE.setText(document.getString("Latitude"));
-                                OUTCOME.setText(document.getString("Last Outcome Catagory"));
-                                SOURCE.setText("Police.Data.UK");
-                            }
-                        } else {
-                            Toast.makeText(getApplicationContext(), "UnSuccessful", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
+        policeData.GetFirebaseDocuments();
     }
 }
