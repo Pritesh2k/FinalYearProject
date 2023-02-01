@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     TextView LONGITUDE;
     TextView LATITUDE;
     TextView SOURCE;
+    TextView OUTCOME;
 
     TextView ALERT_MESSAGE;
 
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     //Classes
     PoliceData policeData;
 
-    @SuppressLint("WrongThread")
+    @SuppressLint({"WrongThread", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
         LONGITUDE = (TextView) findViewById(R.id.Longitude_Data);
         LATITUDE = (TextView) findViewById(R.id.Latitude_Data);
         SOURCE = (TextView) findViewById(R.id.Source_Data);
+        OUTCOME = (TextView) findViewById(R.id.Outcome_Data);
 
         //On click listener allowing user to click the button to show map
         GO_TO_MAP_BTN = (Button) findViewById(R.id.button);
@@ -144,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
                                 LOCATION.setText(document.getString("Location"));
                                 LONGITUDE.setText(document.getString("Longitude"));
                                 LATITUDE.setText(document.getString("Latitude"));
+                                OUTCOME.setText(document.getString("Last Outcome Catagory"));
                                 SOURCE.setText("Police.Data.UK");
                             }
                         } else {

@@ -18,10 +18,10 @@
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.0"
         tools:visibility="visible">
 
         <ImageView
@@ -78,9 +78,10 @@
 
         <TextView
             android:id="@+id/NearestCrime_Header"
-            android:layout_width="371dp"
-            android:layout_height="35dp"
+            android:layout_width="376dp"
+            android:layout_height="22dp"
             android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
             android:text="Nearest Recorded Crime Information"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
@@ -89,15 +90,15 @@
 
         <LinearLayout
             android:id="@+id/linearLayout2"
-            android:layout_width="121dp"
-            android:layout_height="144dp"
+            android:layout_width="113dp"
+            android:layout_height="141dp"
             android:layout_marginStart="16dp"
             android:orientation="vertical"
             android:padding="2dp"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/NearestCrime_Header"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintVertical_bias="0.197"
             tools:visibility="visible">
 
             <TextView
@@ -133,25 +134,34 @@
                 android:text="Latitude" />
 
             <TextView
-                android:id="@+id/Source_Header"
+                android:id="@+id/Outcome_Header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
                 android:fontFamily="sans-serif-medium"
-                android:text="Source" />
+                android:text="Outcome" />
+
+            <TextView
+                android:id="@+id/source_Header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="Source"
+                android:visibility="invisible" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/linearLayout3"
-            android:layout_width="243dp"
-            android:layout_height="144dp"
+            android:layout_width="257dp"
+            android:layout_height="199dp"
             android:layout_marginEnd="16dp"
             android:orientation="vertical"
             android:padding="2dp"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/NearestCrime_Header"
-            app:layout_constraintVertical_bias="0.0">
+            app:layout_constraintVertical_bias="1.0">
 
             <TextView
                 android:id="@+id/Crime_Type_Data"
@@ -190,13 +200,26 @@
                 android:textAlignment="textEnd" />
 
             <TextView
+                android:id="@+id/Outcome_Data"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:layout_margin="4dp"
+                android:elegantTextHeight="true"
+                android:fontFamily="sans-serif-light"
+                android:text="Outcome"
+                android:textAlignment="viewEnd"
+                android:textIsSelectable="true" />
+
+            <TextView
                 android:id="@+id/Source_Data"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
                 android:fontFamily="sans-serif-light"
                 android:text="Source"
-                android:textAlignment="textEnd" />
+                android:textAlignment="textEnd"
+                android:textStyle="bold|italic" />
+
         </LinearLayout>
 
         <TextView
