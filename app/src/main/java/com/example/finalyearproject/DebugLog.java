@@ -2,16 +2,26 @@ package com.example.finalyearproject;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
+import android.location.LocationRequest;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.auth.User;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,8 +31,10 @@ import java.util.List;
 public class DebugLog extends AppCompatActivity {
 
     static MainActivity mainActivity;
-    static PoliceData policeData;
+    static GoogleMaps googleMaps;
     public static TextView DebugText;
+
+    private static TextView UserLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +45,13 @@ public class DebugLog extends AppCompatActivity {
         DebugText.setText("");
         DebugText.setMovementMethod(new ScrollingMovementMethod());
 
+        UserLocation = (TextView) findViewById(R.id.UserLocation);
+
         GetFirebaseDocuments();
     }
 
-    public static void GetFirebaseDocuments(){
+    public void GetFirebaseDocuments(){
+
         //Reading from the Firebase DB
         mainActivity.db.collection("November-2022")
                 .get()

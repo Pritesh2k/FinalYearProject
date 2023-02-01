@@ -2,8 +2,6 @@ package com.example.finalyearproject;
 
 import static android.content.ContentValues.TAG;
 
-//import static com.example.finalyearproject.PoliceData.FirebaseDocuments;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -56,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
     public static TextView LATITUDE;
     public static TextView SOURCE;
     public static TextView OUTCOME;
-//    public static TextView DebugText;
 
     TextView ALERT_MESSAGE;
 

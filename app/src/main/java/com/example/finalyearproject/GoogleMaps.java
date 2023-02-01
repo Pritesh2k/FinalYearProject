@@ -2,6 +2,7 @@ package com.example.finalyearproject;
 
 import static android.Manifest.*;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -9,20 +10,34 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.location.Location;
 import android.os.Bundle;
+import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.finalyearproject.databinding.ActivityGoogleMapsBinding;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+
+import org.jetbrains.annotations.NotNull;
 
 public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private ActivityGoogleMapsBinding binding;
+
+    public static Location currentLocation;
+    FusedLocationProviderClient fusedLocationProviderClient;
+    private static final int REQUEST_CODE = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +66,23 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
         mMap = googleMap;
 
         // Add a marker in London and move the camera
-        LatLng London = new LatLng(51.509865, -0.118092);
-        mMap.addMarker(new MarkerOptions().position(London).title("Marker in London"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(London));
+        LatLng Marker = new LatLng(51.5097, -0.084844);
+        mMap.addMarker(new MarkerOptions().position(Marker).title("[Add Crime Here]"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(Marker));
+
+        //Circles
+        CircleOptions Circle = new CircleOptions();
+        Circle.center(new LatLng(51.5097, -0.084844));
+        Circle.radius(1000);
+        Circle.fillColor(0x80FF0000);
+        Circle.strokeColor(Color.RED);
+
+        //Adding to Map
+        mMap.addCircle(Circle);
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(Marker));
 
         enableMyLocation();
+
     }
 
     private void enableMyLocation(){
