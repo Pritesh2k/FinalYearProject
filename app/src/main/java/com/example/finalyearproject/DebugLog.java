@@ -35,6 +35,7 @@ public class DebugLog extends AppCompatActivity {
     public static TextView DebugText;
 
     private static TextView UserLocation;
+    public static ArrayList<String> Documents = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,7 @@ public class DebugLog extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 if (!document.getString("Location").equals("No Location") || !document.getString("Longitude").equals("") || !document.getString("Latitude").equals("")) {
-                                    ArrayList<String> Documents = new ArrayList<String>();
+
                                     Documents.add(document.getString("Crime Type"));
                                     Documents.add(document.getString("Location"));
                                     Documents.add(document.getString("Longitude"));
