@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -15,11 +16,16 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PoliceData {
 
     private static String file_path = "E://FYP/2022-11-city-of-london-street - 2022-11-city-of-london-street.csv";
+
     static MainActivity mainActivity;
+    static GoogleMaps googleMaps;
+    static DebugLog debug;
+
     public static ArrayList<String> Longitude = new ArrayList<>();
     public static ArrayList<String> Latitude = new ArrayList<>();
     public static ArrayList<String> Location = new ArrayList<>();
@@ -28,7 +34,11 @@ public class PoliceData {
 
     public static ArrayList<String> LOC_messages = new ArrayList<String>();
     public static ArrayList<String> PackagedData = new ArrayList<>();
+
+    public static ArrayList<String> dataArray;
+
     public static int Length_Of_DataSet;
+    public static String Data = "";
 
     public static boolean GetCrimeData = true;
 
@@ -171,7 +181,11 @@ public class PoliceData {
                                 mainActivity.OUTCOME.setText(document.getString("Last Outcome Catagory"));
                                 mainActivity.SOURCE.setText("Police.Data.UK");
 
-                                //mainActivity.DebugText.setText(document.getString("Crime Type"));
+                                if (!document.getString("Location").equals("No Location") || !document.getString("Longitude").equals("") || !document.getString("Latitude").equals("")) {
+                                    Data = Data + (document.getString("Crime Type") + "\n" + document.getString("Location")
+                                            + "\n" + document.getString("Longitude") + "\n" + document.getString("Latitude")
+                                            + "\n" + document.getString("Last Outcome Catagory") + "\n\n");
+                                }
                             }
                         } else {
                             Toast.makeText(mainActivity.getApplicationContext(),"UnSuccessful", Toast.LENGTH_LONG).show();

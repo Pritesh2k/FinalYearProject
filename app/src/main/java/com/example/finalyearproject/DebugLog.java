@@ -12,10 +12,13 @@ import android.location.LocationManager;
 import android.location.LocationRequest;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Debug;
+import android.provider.ContactsContract;
 import android.text.method.ScrollingMovementMethod;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.util.ArrayUtils;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -30,11 +33,10 @@ import java.util.List;
 
 public class DebugLog extends AppCompatActivity {
 
-    static MainActivity mainActivity;
-    static GoogleMaps googleMaps;
+    static PoliceData policeData;
+
     public static TextView DebugText;
 
-    private static TextView UserLocation;
     public static ArrayList<String> Documents = new ArrayList<String>();
 
     @Override
@@ -46,38 +48,24 @@ public class DebugLog extends AppCompatActivity {
         DebugText.setText("");
         DebugText.setMovementMethod(new ScrollingMovementMethod());
 
-        UserLocation = (TextView) findViewById(R.id.UserLocation);
+        //Splitting the data from the Text variable holding the crimes and putting them into an arraylist
+        String[] DataCollection = policeData.Data.split("\n");
+        policeData.dataArray = new ArrayList<String>(Arrays.asList(DataCollection));
+        ArrayList<String> getDataArray = policeData.dataArray;
 
-        GetFirebaseDocuments();
-    }
+        //Getting the Text variable holding the crimes and displaying them - removing the spaces.
+        int counter = 0;
+        int contentCounter = 1;
 
-    public void GetFirebaseDocuments(){
-
-        //Reading from the Firebase DB
-        mainActivity.db.collection("November-2022")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                if (!document.getString("Location").equals("No Location") || !document.getString("Longitude").equals("") || !document.getString("Latitude").equals("")) {
-
-                                    Documents.add(document.getString("Crime Type"));
-                                    Documents.add(document.getString("Location"));
-                                    Documents.add(document.getString("Longitude"));
-                                    Documents.add(document.getString("Latitude"));
-                                    Documents.add(document.getString("Last Outcome Catagory"));
-
-                                    DebugText.append(Documents.get(0) + "\n" + Documents.get(1) + "\n" + Documents.get(2) + "\n" + Documents.get(3) + "\n" + Documents.get(4) + "\n\n");
-                                } else{
-                                    continue;
-                                }
-                            }
-                        } else {
-                            Toast.makeText(mainActivity.getApplicationContext(),"UnSuccessful", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
+        while (counter < getDataArray.size()){
+            if (contentCounter != 6){
+                DebugText.append(counter + " |" + getDataArray.get(counter) + "\n");
+                contentCounter ++;
+            } else {
+                DebugText.append("\n");
+                contentCounter = 1;
+            }
+            counter++;
+        }
     }
 }

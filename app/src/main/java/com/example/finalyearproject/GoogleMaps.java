@@ -14,6 +14,7 @@ import android.graphics.Color;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -26,10 +27,15 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.finalyearproject.databinding.ActivityGoogleMapsBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 
 public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
 
@@ -40,9 +46,27 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
     private static int OutcomePointer = 4;
     private static int LengthOfDocuments;
 
-    static DebugLog debug;
+    private static String[] OffenceTypes = {
+            "Anti-social behaviour",
+            "Bicycle theft",
+            "Burglary",
+            "Criminal damage and arson",
+            "Drugs",
+            "Other crime",
+            "Other theft",
+            "Possession of weapons",
+            "Public order",
+            "Robbery",
+            "Shoplifting",
+            "Theft from the person",
+            "Vehicle crime",
+            "Violence and sexual offences"};
 
-    private GoogleMap mMap;
+    static DebugLog debug;
+    static PoliceData policeData;
+    static MainActivity mainActivity;
+
+    static GoogleMap mMap;
     private ActivityGoogleMapsBinding binding;
 
     public static Location currentLocation;
@@ -77,30 +101,12 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        //Loop through the array
-        while (OutcomePointer < LengthOfDocuments ||
-                CrimePointer < LengthOfDocuments ||
-                LocationPointer < LengthOfDocuments ||
-                LongitudePointer < LengthOfDocuments ||
-                LatitudePointer < LengthOfDocuments){
-//            System.out.println(debug.Documents.get(CrimePointer));
-//            System.out.println(debug.Documents.get(LocationPointer));
-//            System.out.println(debug.Documents.get(LongitudePointer));
-//            System.out.println(debug.Documents.get(LatitudePointer));
-//            System.out.println(debug.Documents.get(OutcomePointer));
-            //Push to the function
-            CreateCrimeMapObjects(googleMap, debug.Documents.get(CrimePointer),
-                    debug.Documents.get(OutcomePointer),
-                    debug.Documents.get(LocationPointer),
-                    Double.valueOf(debug.Documents.get(LongitudePointer)),
-                    Double.valueOf(debug.Documents.get(LatitudePointer)));
-            //Set pointers to current set of values
-            CrimePointer += 5;
-            LocationPointer += 5;
-            LongitudePointer += 5;
-            LatitudePointer += 5;
-            OutcomePointer += 5;
-        }
+        //Plug the values to create the circle
+        LatLng Marker = new LatLng(51.51809, -0.11035);
+        mMap.addMarker(new MarkerOptions().position(Marker).title("Crime").snippet("On or near Holborn"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(Marker));
+        //Adding to Map
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(Marker));
 
         enableMyLocation();
 
@@ -115,27 +121,5 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
             String Permissions [] = {"android.permission.ACCESS_FINE_LOCATION"};
             ActivityCompat.requestPermissions(this, Permissions, 200);
         }
-    }
-
-    private static void CreateCrimeMapObjects(GoogleMap mMap, String Crime, String Outcome, String Location, Double Longitude, Double Latitude){
-
-        // Add a marker and move the camera
-        //Plug the values to create the circle
-        LatLng Marker = new LatLng(Latitude, Longitude);
-        mMap.addMarker(new MarkerOptions().position(Marker).title(Crime).snippet(Location));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(Marker));
-
-        //Circles
-        CircleOptions Circle = new CircleOptions();
-        Circle.center(new LatLng(Latitude, Longitude));
-        Circle.radius(1000);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Circle.fillColor(Color.argb(0.25F, 184F, 0F, 0F));
-        }
-        Circle.strokeColor(Color.RED);
-
-        //Adding to Map
-        //mMap.addCircle(Circle);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(Marker));
     }
 }
