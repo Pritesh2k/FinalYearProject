@@ -1,8 +1,5 @@
 package com.example.finalyearproject;
 
-import static android.content.ContentValues.TAG;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -11,30 +8,16 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.WriteBatch;
 
-import org.checkerframework.checker.units.qual.C;
-import org.w3c.dom.Text;
+import java.util.Random;
+import java.util.Timer;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     Button DO_TO_DEBUG;
     Button POP_UP_BTN;
     Button SAFTEY_BTN;
+    Button ALERT_MESSAGE;
 
     //Referencing Text Components
     public static TextView CRIME_TYPE;
@@ -55,11 +39,8 @@ public class MainActivity extends AppCompatActivity {
     public static TextView SOURCE;
     public static TextView OUTCOME;
 
-    TextView ALERT_MESSAGE;
-
     //Variable
-    boolean isAlertMessage_ACTIVE = true;
-    boolean ALERT_MSG_ACTIVE = true;
+    public static boolean isAlertMessage_ACTIVE = true;
 
     //Classes
     PoliceData policeData;
@@ -71,10 +52,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Considering the state of the Alert Message Pop Up and setting up the Vibration
-        ALERT_MESSAGE = (TextView) findViewById(R.id.ALERT_MESSAGE);
+        ALERT_MESSAGE = (Button) findViewById(R.id.NotificationButton);
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
-        if (isAlertMessage_ACTIVE == true) { //Alert Message is active
+        if (isAlertMessage_ACTIVE) { //Alert Message is active
             // Set the new state
             ALERT_MESSAGE.setVisibility(View.VISIBLE);
 
@@ -97,10 +78,9 @@ public class MainActivity extends AppCompatActivity {
         LATITUDE = (TextView) findViewById(R.id.Latitude_Data);
         SOURCE = (TextView) findViewById(R.id.Source_Data);
         OUTCOME = (TextView) findViewById(R.id.Outcome_Data);
-        //DebugText = (TextView) findViewById(R.id.Debug_Testing);
 
         //On click listener allowing user to click the button to show map
-        GO_TO_MAP_BTN = (Button) findViewById(R.id.button3);
+        GO_TO_MAP_BTN = (Button) findViewById(R.id.MapButton);
         GO_TO_MAP_BTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -112,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Go To Debug Page
-        DO_TO_DEBUG = (Button) findViewById(R.id.Debugging);
+        DO_TO_DEBUG = (Button) findViewById(R.id.CrimeLog);
         DO_TO_DEBUG.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -123,17 +103,24 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Creating a manual Pop Up Message (MUST incorporate later FULLY along with predication ect...
-        POP_UP_BTN = (Button) findViewById(R.id.pop_up);
-        if (ALERT_MSG_ACTIVE == true) {
-            POP_UP_BTN.setOnClickListener(new View.OnClickListener() {
+            //Improved
+        if(isAlertMessage_ACTIVE){
+            GO_TO_MAP_BTN.setVisibility(View.INVISIBLE);
+            DO_TO_DEBUG.setVisibility(View.INVISIBLE);
+            ALERT_MESSAGE.setVisibility(View.VISIBLE);
+
+            ALERT_MESSAGE.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    isAlertMessage_ACTIVE = false;
+                    GO_TO_MAP_BTN.setVisibility(View.VISIBLE);
+                    DO_TO_DEBUG.setVisibility(View.VISIBLE);
                     ALERT_MESSAGE.setVisibility(View.INVISIBLE);
-                    POP_UP_BTN.setVisibility(View.GONE);
                 }
             });
+            isAlertMessage_ACTIVE = false;
         }
+
+
 
         //Call someone upon OnClick
         SAFTEY_BTN = (Button) findViewById(R.id.saftey_button);

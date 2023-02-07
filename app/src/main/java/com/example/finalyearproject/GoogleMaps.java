@@ -63,8 +63,6 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
             "Violence and sexual offences"};
 
     static DebugLog debug;
-    static PoliceData policeData;
-    static MainActivity mainActivity;
 
     static GoogleMap mMap;
     private ActivityGoogleMapsBinding binding;
@@ -109,7 +107,6 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
         mMap.moveCamera(CameraUpdateFactory.newLatLng(Marker));
 
         enableMyLocation();
-
     }
 
     private void enableMyLocation(){
@@ -118,7 +115,7 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
                 mMap.setMyLocationEnabled(true);
             }
         } else {
-            String Permissions [] = {"android.permission.ACCESS_FINE_LOCATION"};
+            String[] Permissions = {"android.permission.ACCESS_FINE_LOCATION"};
             ActivityCompat.requestPermissions(this, Permissions, 200);
         }
     }
