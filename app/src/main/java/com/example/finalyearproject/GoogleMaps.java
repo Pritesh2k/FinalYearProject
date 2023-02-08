@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.api.Batch;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -90,6 +91,8 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+
         //Plug the values to create the circle
         LatLng Marker = new LatLng(51.51809, -0.11035);
         //mMap.addMarker(new MarkerOptions().position(Marker).title("Crime").snippet("On or near Holborn"));
@@ -97,8 +100,13 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
         //Adding to Map
 
         WriteDB(mMap);
+        updateCurrentLocation();
 
         enableMyLocation();
+    }
+
+    private void updateCurrentLocation(){
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
     }
 
     private void enableMyLocation(){

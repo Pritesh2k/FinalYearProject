@@ -9,8 +9,8 @@
 
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="382dp"
-        android:layout_height="578dp"
+        android:layout_width="0dp"
+        android:layout_height="571dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,8 +40,9 @@
 
     <Button
         android:id="@+id/Debug_OpenMap"
-        android:layout_width="392dp"
+        android:layout_width="0dp"
         android:layout_height="134dp"
+        android:gravity="center"
         android:text="Update and Open Map"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

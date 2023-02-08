@@ -12,8 +12,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/Main_Content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="731dp"
         android:clickable="false"
         android:focusable="false"
         android:visibility="visible"
@@ -27,28 +27,31 @@
 
         <ImageView
             android:id="@+id/MapBackground"
-            android:layout_width="412dp"
+            android:layout_width="0dp"
             android:layout_height="353dp"
             android:alpha="0.5"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/_background_map" />
 
         <Button
             android:id="@+id/CrimeLog"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="321dp"
+            android:layout_height="58dp"
+            android:autoText="true"
             android:backgroundTint="#424242"
             android:text="Crime Log"
+            android:textColor="#FFFFFF"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@+id/MapBackground"
-            app:layout_constraintEnd_toEndOf="@+id/MapBackground"
-            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/MapBackground"
-            app:layout_constraintVertical_bias="0.855" />
+            app:layout_constraintVertical_bias="1.0" />
 
         <Button
             android:id="@+id/MapButton"
@@ -60,6 +63,22 @@
             app:layout_constraintEnd_toEndOf="@+id/MapBackground"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/MapBackground" />
+
+        <Button
+            android:id="@+id/NotificationButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:backgroundTint="#FF5722"
+            android:elegantTextHeight="true"
+            android:text="Warning: The System Has Detected A Potential Threat In Your Area. Please Press The Saftey Button If You Do Not Feel Safe, Or Press This Prompt To Close"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/MapBackground"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/MapBackground"
+            app:layout_constraintVertical_bias="0.0"
+            tools:visibility="invisible" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -87,6 +106,7 @@
             android:layout_width="371dp"
             android:layout_height="35dp"
             android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
             android:text="Nearest Recorded Crime Information"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
@@ -216,22 +236,6 @@
                 android:textStyle="bold|italic" />
 
         </LinearLayout>
-
-        <Button
-            android:id="@+id/NotificationButton"
-            android:layout_width="407dp"
-            android:layout_height="353dp"
-            android:backgroundTint="#FF5722"
-            android:elegantTextHeight="true"
-            android:text="Warning: The System Has Detected A Potential Threat In Your Area. Please Press The Saftey Button If You Do Not Feel Safe, Or Press This Prompt To Close"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@+id/MapBackground"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/MapBackground"
-            app:layout_constraintVertical_bias="0.0"
-            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
