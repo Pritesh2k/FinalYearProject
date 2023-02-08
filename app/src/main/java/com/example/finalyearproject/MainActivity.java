@@ -15,9 +15,10 @@ import android.widget.Toast;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Timer;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Variable
     public static boolean isAlertMessage_ACTIVE = true;
+    static  String[] DataCollection;
 
     //Classes
     PoliceData policeData;
@@ -119,8 +121,6 @@ public class MainActivity extends AppCompatActivity {
             });
             isAlertMessage_ACTIVE = false;
         }
-
-
 
         //Call someone upon OnClick
         SAFTEY_BTN = (Button) findViewById(R.id.saftey_button);

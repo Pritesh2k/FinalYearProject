@@ -1,70 +1,60 @@
 package com.example.finalyearproject;
 
-import static android.Manifest.*;
+import static com.example.finalyearproject.PoliceData.getDataArray;
+import static com.example.finalyearproject.PoliceData.mainActivity;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.Location;
-import android.os.Build;
+import android.nfc.Tag;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.provider.ContactsContract;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.Batch;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.finalyearproject.databinding.ActivityGoogleMapsBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.WriteBatch;
 
-import org.jetbrains.annotations.NotNull;
-
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
 
-    private static int CrimePointer = 0;
-    private static int LocationPointer = 1;
-    private static int LongitudePointer = 2;
-    private static int LatitudePointer = 3;
-    private static int OutcomePointer = 4;
     private static int LengthOfDocuments;
 
-    private static String[] OffenceTypes = {
-            "Anti-social behaviour",
-            "Bicycle theft",
-            "Burglary",
-            "Criminal damage and arson",
-            "Drugs",
-            "Other crime",
-            "Other theft",
-            "Possession of weapons",
-            "Public order",
-            "Robbery",
-            "Shoplifting",
-            "Theft from the person",
-            "Vehicle crime",
-            "Violence and sexual offences"};
+    private static ArrayList<String> Crime = new ArrayList<>();
+    private static ArrayList<String> Location = new ArrayList<>();
+    private static ArrayList<GeoPoint> Position = new ArrayList<>();
 
     static DebugLog debug;
 
-    static GoogleMap mMap;
+    public static GoogleMap mMap;
     private ActivityGoogleMapsBinding binding;
 
     public static Location currentLocation;
@@ -107,6 +97,8 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
         mMap.moveCamera(CameraUpdateFactory.newLatLng(Marker));
 
         enableMyLocation();
+
+        WriteDB(mMap);
     }
 
     private void enableMyLocation(){
@@ -117,6 +109,40 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
         } else {
             String[] Permissions = {"android.permission.ACCESS_FINE_LOCATION"};
             ActivityCompat.requestPermissions(this, Permissions, 200);
+        }
+    }
+
+    private void WriteDB(GoogleMap map) {
+
+        int CrimePointer = 0;
+        int LocationPointer = 1;
+        int LongitudePointer = 2;
+        int LatitudePointer = 3;
+        int OutcomePointer = 4;
+
+        while (OutcomePointer < getDataArray.size()){
+
+            if (!getDataArray.get(CrimePointer).equals("") || !getDataArray.get(LocationPointer).equals("No Location")
+            || !getDataArray.get(LongitudePointer).equals("") || !getDataArray.get(LatitudePointer).equals("")) {
+
+                Crime.add(getDataArray.get(CrimePointer));
+                Location.add(getDataArray.get(LocationPointer));
+                GeoPoint geoPoint = new GeoPoint(Double.parseDouble(getDataArray.get(LatitudePointer)), Double.parseDouble(getDataArray.get(LongitudePointer)));
+                Position.add(geoPoint);
+
+                CrimePointer += 6;
+                LocationPointer += 6;
+                LongitudePointer += 6;
+                LatitudePointer += 6;
+                OutcomePointer += 6;
+            }
+        }
+
+        for (int counter = 0; counter < Crime.size(); counter++){
+            MarkerOptions markerOptions = new MarkerOptions();
+            LatLng geoPosition = new LatLng(Position.get(counter).getLatitude(), Position.get(counter).getLongitude());
+            markerOptions.title(Crime.get(counter)).position(geoPosition).snippet(Location.get(counter));
+            map.addMarker(markerOptions);
         }
     }
 }

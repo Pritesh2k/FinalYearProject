@@ -35,6 +35,7 @@ public class PoliceData {
     public static String Data = "";
 
     public static boolean GetCrimeData = true;
+    public static ArrayList<String> getDataArray = new ArrayList<String>();
 
     public static void main(String[] args) {
 
