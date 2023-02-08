@@ -101,18 +101,6 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/NearestCrime_Header"
-            android:layout_width="371dp"
-            android:layout_height="35dp"
-            android:fontFamily="sans-serif-condensed"
-            android:gravity="center"
-            android:text="Nearest Recorded Crime Information"
-            android:textAlignment="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/MapBackground" />
-
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="121dp"
@@ -168,11 +156,25 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/NearestCrime_Header"
+            android:layout_width="371dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
+            android:text="Nearest Recorded Crime Information"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.54"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/MapBackground" />
+
         <LinearLayout
             android:id="@+id/linearLayout3"
             android:layout_width="247dp"
             android:layout_height="186dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="12dp"
             android:orientation="vertical"
             android:padding="2dp"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
