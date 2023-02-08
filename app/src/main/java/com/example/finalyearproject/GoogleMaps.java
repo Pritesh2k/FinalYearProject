@@ -95,7 +95,6 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
 
         //Plug the values to create the circle
         LatLng Marker = new LatLng(51.51809, -0.11035);
-        //mMap.addMarker(new MarkerOptions().position(Marker).title("Crime").snippet("On or near Holborn"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(Marker));
         //Adding to Map
 
