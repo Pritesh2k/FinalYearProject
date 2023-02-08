@@ -25,6 +25,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.finalyearproject.databinding.ActivityGoogleMapsBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -91,14 +92,13 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
 
         //Plug the values to create the circle
         LatLng Marker = new LatLng(51.51809, -0.11035);
-        mMap.addMarker(new MarkerOptions().position(Marker).title("Crime").snippet("On or near Holborn"));
+        //mMap.addMarker(new MarkerOptions().position(Marker).title("Crime").snippet("On or near Holborn"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(Marker));
         //Adding to Map
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(Marker));
-
-        enableMyLocation();
 
         WriteDB(mMap);
+
+        enableMyLocation();
     }
 
     private void enableMyLocation(){
