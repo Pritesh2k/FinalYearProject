@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -28,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     //Referencing Button Components
     Button GO_TO_MAP_BTN;
     Button DO_TO_DEBUG;
-    Button POP_UP_BTN;
     Button SAFTEY_BTN;
     Button ALERT_MESSAGE;
 
@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     //Variable
     public static boolean isAlertMessage_ACTIVE = true;
     static  String[] DataCollection;
+
+    static boolean intialiseMapButton = true;
 
     //Classes
     PoliceData policeData;

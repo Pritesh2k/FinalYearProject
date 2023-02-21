@@ -39,8 +39,8 @@
 
         <Button
             android:id="@+id/CrimeLog"
-            android:layout_width="321dp"
-            android:layout_height="58dp"
+            android:layout_width="218dp"
+            android:layout_height="49dp"
             android:autoText="true"
             android:backgroundTint="#424242"
             android:text="Crime Log"
@@ -48,10 +48,9 @@
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@+id/MapBackground"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/MapBackground"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="0.759" />
 
         <Button
             android:id="@+id/MapButton"
@@ -74,7 +73,7 @@
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/MapBackground"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/MapBackground"
             app:layout_constraintVertical_bias="0.0"
