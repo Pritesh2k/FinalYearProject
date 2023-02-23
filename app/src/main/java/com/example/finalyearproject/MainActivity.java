@@ -15,12 +15,6 @@ import android.widget.Toast;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
-import java.util.Timer;
-
 public class MainActivity extends AppCompatActivity {
 
     //Referencing Database Instance
@@ -84,24 +78,29 @@ public class MainActivity extends AppCompatActivity {
         OUTCOME = (TextView) findViewById(R.id.Outcome_Data);
 
         //On click listener allowing user to click the button to show map
-        GO_TO_MAP_BTN = (Button) findViewById(R.id.MapButton);
+        GO_TO_MAP_BTN = (Button) findViewById(R.id.CrimeLog_Button);
         GO_TO_MAP_BTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Accessing Internet and Location
+
+//                Intent intent = new Intent();
+//                intent.setClass(getApplicationContext(), GoogleMaps.class);
+//                startActivity(intent);
+
                 Intent intent = new Intent();
-                intent.setClass(getApplicationContext(), GoogleMaps.class);
+                intent.setClass(getApplicationContext(), DebugLog.class);
                 startActivity(intent);
             }
         });
 
         //Go To Debug Page
-        DO_TO_DEBUG = (Button) findViewById(R.id.CrimeLog);
+        DO_TO_DEBUG = (Button) findViewById(R.id.News);
         DO_TO_DEBUG.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.setClass(getApplicationContext(), DebugLog.class);
+                intent.setClass(getApplicationContext(), NewsAPI.class);
                 startActivity(intent);
             }
         });
