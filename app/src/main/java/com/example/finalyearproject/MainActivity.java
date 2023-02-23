@@ -44,6 +44,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //TO DELETE
+        Intent intent = new Intent();
+        intent.setClass(getApplicationContext(), NewsAPI.class);
+        startActivity(intent);
+        //
+
+        //UN-COMMENT THE DB CALL AT BOTTOM
+
         //Considering the state of the Alert Message Pop Up and setting up the Vibration
         ALERT_MESSAGE = (Button) findViewById(R.id.NotificationButton);
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
@@ -77,11 +85,6 @@ public class MainActivity extends AppCompatActivity {
         GO_TO_MAP_BTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Accessing Internet and Location
-
-//                Intent intent = new Intent();
-//                intent.setClass(getApplicationContext(), GoogleMaps.class);
-//                startActivity(intent);
 
                 Intent intent = new Intent();
                 intent.setClass(getApplicationContext(), DebugLog.class);
@@ -135,6 +138,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Reading from the Firebase DB
-        PoliceData.GetFirebaseDocuments();
+        //PoliceData.GetFirebaseDocuments();
     }
 }

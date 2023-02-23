@@ -28,7 +28,7 @@ public class NewsAPI extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_api);
 
-        newsSafteyButton = findViewById(R.id.safteyNewsButton);
+        newsSafteyButton = findViewById(R.id.news_saftey_button);
         newsSafteyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
