@@ -38,11 +38,6 @@ public class MainActivity extends AppCompatActivity {
     public static boolean isAlertMessage_ACTIVE = true;
     static  String[] DataCollection;
 
-    static boolean intialiseMapButton = true;
-
-    //Classes
-    PoliceData policeData;
-
     @SuppressLint({"WrongThread", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,6 +135,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Reading from the Firebase DB
-        policeData.GetFirebaseDocuments();
+        PoliceData.GetFirebaseDocuments();
     }
 }

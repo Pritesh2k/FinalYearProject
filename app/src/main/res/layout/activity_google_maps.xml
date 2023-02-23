@@ -10,3 +10,4 @@
     android:layout_weight="0.5"
     tools:context=".GoogleMaps">
 </fragment>
+
