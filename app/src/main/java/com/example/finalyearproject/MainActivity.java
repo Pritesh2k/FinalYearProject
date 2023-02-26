@@ -50,8 +50,6 @@ public class MainActivity extends AppCompatActivity {
 //        startActivity(intent);
 //        //
 
-        //UN-COMMENT THE DB CALL AT BOTTOM
-
         //Considering the state of the Alert Message Pop Up and setting up the Vibration
         ALERT_MESSAGE = (Button) findViewById(R.id.NotificationButton);
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
