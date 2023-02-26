@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+    id 'com.chaquo.python'
 }
 
 android {
@@ -16,6 +17,20 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a"
+        }
+
+        python {
+            buildPython "C:/Users/prite/PycharmProjects/pythonProject/venv/Scripts/python.exe"
+        }
+
+        sourceSets {
+            main {
+                python.srcDir "src/main/python"
+            }
+        }
     }
 
     buildTypes {
@@ -36,13 +51,13 @@ android {
 dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'com.google.firebase:firebase-firestore:24.4.1'
+    implementation 'com.google.firebase:firebase-firestore:24.4.3'
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
     implementation 'androidx.navigation:navigation-fragment:2.5.3'
     implementation 'androidx.navigation:navigation-ui:2.5.3'
-    implementation 'com.google.firebase:firebase-crashlytics-buildtools:2.9.2'
+    implementation 'com.google.firebase:firebase-crashlytics-buildtools:2.9.4'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
@@ -51,7 +66,9 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
 
-
     //Add Dependencies Under Here...
+    implementation 'com.github.bumptech.glide:glide:4.15.0'//glide image loader library
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.15.0'//glide image loader library
+    implementation 'com.github.KwabenBerko:News-API-Java:1.0.2'//newsapi library
 
 }

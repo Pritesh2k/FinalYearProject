@@ -44,11 +44,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //TO DELETE
-        Intent intent = new Intent();
-        intent.setClass(getApplicationContext(), NewsAPI.class);
-        startActivity(intent);
-        //
+//        //TO DELETE
+//        Intent intent = new Intent();
+//        intent.setClass(getApplicationContext(), NewsAPI.class);
+//        startActivity(intent);
+//        //
 
         //UN-COMMENT THE DB CALL AT BOTTOM
 
@@ -138,6 +138,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Reading from the Firebase DB
-        //PoliceData.GetFirebaseDocuments();
+        PoliceData.GetFirebaseDocuments();
     }
 }

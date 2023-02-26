@@ -29,6 +29,13 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".PythonClass"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".DebugLog"
             android:exported="false">
             <meta-data
