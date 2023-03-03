@@ -23,13 +23,6 @@
         android:theme="@style/Theme.FinalYearProject"
         tools:targetApi="31">
         <activity
-            android:name=".NotificationActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".Model.DetailsActivity"
             android:exported="false">
             <meta-data
