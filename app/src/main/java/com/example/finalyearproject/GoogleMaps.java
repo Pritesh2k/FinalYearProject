@@ -1,6 +1,7 @@
 package com.example.finalyearproject;
 
 import static com.example.finalyearproject.PoliceData.getDataArray;
+import static com.example.finalyearproject.PoliceData.mainActivity;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -9,6 +10,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -19,6 +21,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.finalyearproject.databinding.ActivityGoogleMapsBinding;
@@ -26,14 +30,16 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.GeoPoint;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
 
     private static int LengthOfDocuments;
 
     private static ArrayList<String> Crime = new ArrayList<>();
-    private static ArrayList<String> Location = new ArrayList<>();
-    private static ArrayList<GeoPoint> Position = new ArrayList<>();
+    private static ArrayList<String> Location_geoPoints = new ArrayList<>();
+    public static ArrayList<GeoPoint> Position = new ArrayList<>();
+    static List<CircleOptions> circleList = new ArrayList<>();
 
     static DebugLog debug;
 
@@ -80,11 +86,9 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
         //Plug the values to create the circle
         LatLng Marker = new LatLng(51.51809, -0.11035);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(Marker));
-        //Adding to Map
 
         WriteDB(mMap);
         updateCurrentLocation();
-
         enableMyLocation();
     }
 
@@ -125,6 +129,9 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
                         currentLocation = location;
                         USER_CURRENT_LOCATION = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
                         System.out.println(USER_CURRENT_LOCATION);
+
+                        //
+                        CheckCircles(location);
                     }
                 }
             });
@@ -147,7 +154,7 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
             || !getDataArray.get(LongitudePointer).equals("") || !getDataArray.get(LatitudePointer).equals("")) {
 
                 Crime.add(getDataArray.get(CrimePointer));
-                Location.add(getDataArray.get(LocationPointer));
+                Location_geoPoints.add(getDataArray.get(LocationPointer));
                 GeoPoint geoPoint = new GeoPoint(Double.parseDouble(getDataArray.get(LatitudePointer)), Double.parseDouble(getDataArray.get(LongitudePointer)));
                 Position.add(geoPoint);
 
@@ -162,8 +169,34 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
         for (int counter = 0; counter < Crime.size(); counter++){
             MarkerOptions markerOptions = new MarkerOptions();
             LatLng geoPosition = new LatLng(Position.get(counter).getLatitude(), Position.get(counter).getLongitude());
-            markerOptions.title(Crime.get(counter)).position(geoPosition).snippet(Location.get(counter));
+            markerOptions.title(Crime.get(counter)).position(geoPosition).snippet(Location_geoPoints.get(counter));
             map.addMarker(markerOptions);
+
+            //Add circles
+            CircleOptions circleOptions = new CircleOptions()
+                    .center(geoPosition)
+                    .radius(100)
+                    .fillColor(Color.parseColor("#500084d3"));
+            map.addCircle(circleOptions);
+            circleList.add(circleOptions);
+        }
+    }
+
+    public static void CheckCircles(Location location) {
+        for (int counter = 0; counter < circleList.size(); counter++) {
+            Location circleLocation = new Location("");
+            circleLocation.setLatitude(circleList.get(counter).getCenter().latitude);
+            circleLocation.setLongitude(circleList.get(counter).getCenter().longitude);
+
+            float distanceInMeters = location.distanceTo(circleLocation);
+
+            if (distanceInMeters <= 100) {
+                // User's location is within 100m of the circle's center
+                System.out.println(circleLocation.getLatitude() + " | " + circleLocation.getLongitude() + " | " + distanceInMeters + " | Dangerous");
+            } else {
+                // User's location is more than 100m away from the circle's center
+                System.out.println(circleLocation.getLatitude() + " | " + circleLocation.getLongitude() + " | " + distanceInMeters);
+            }
         }
     }
 }

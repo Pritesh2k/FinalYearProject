@@ -1,9 +1,12 @@
 package com.example.finalyearproject;
 
+import android.location.Location;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -169,12 +172,12 @@ public class PoliceData {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
-                                mainActivity.CRIME_TYPE.setText(document.getString("Crime Type"));
-                                mainActivity.LOCATION.setText(document.getString("Location"));
-                                mainActivity.LONGITUDE.setText(document.getString("Longitude"));
-                                mainActivity.LATITUDE.setText(document.getString("Latitude"));
-                                mainActivity.OUTCOME.setText(document.getString("Last Outcome Catagory"));
-                                mainActivity.SOURCE.setText("Police.Data.UK");
+//                                mainActivity.CRIME_TYPE.setText(document.getString("Crime Type"));
+//                                mainActivity.LOCATION.setText(document.getString("Location"));
+//                                mainActivity.LONGITUDE.setText(document.getString("Longitude"));
+//                                mainActivity.LATITUDE.setText(document.getString("Latitude"));
+//                                mainActivity.OUTCOME.setText(document.getString("Last Outcome Catagory"));
+//                                mainActivity.SOURCE.setText("Police.Data.UK");
 
                                 if (!document.getString("Location").equals("No Location") || !document.getString("Longitude").equals("") || !document.getString("Latitude").equals("")) {
                                     Data = Data + (document.getString("Crime Type") + "\n" + document.getString("Location")

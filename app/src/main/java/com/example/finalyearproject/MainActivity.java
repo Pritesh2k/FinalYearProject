@@ -1,11 +1,20 @@
 package com.example.finalyearproject;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
@@ -35,11 +44,8 @@ public class MainActivity extends AppCompatActivity {
     public static TextView OUTCOME;
 
     //Variable
-    public static boolean isAlertMessage_ACTIVE = true;
+    public static boolean isAlertMessage_ACTIVE = false;
     static  String[] DataCollection;
-
-    //Classes
-    GoogleMaps googleMaps;
 
     @SuppressLint({"WrongThread", "MissingInflatedId"})
     @Override
@@ -49,23 +55,6 @@ public class MainActivity extends AppCompatActivity {
 
         //Considering the state of the Alert Message Pop Up and setting up the Vibration
         ALERT_MESSAGE = (Button) findViewById(R.id.NotificationButton);
-        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-
-        if (isAlertMessage_ACTIVE) { //Alert Message is active
-            // Set the new state
-            ALERT_MESSAGE.setVisibility(View.VISIBLE);
-
-            //Vibration code
-            if (vibrator.hasVibrator()) {
-                vibrator.vibrate(1500); // 500 milliseconds
-                try {
-                    Thread.sleep(1000); // 1000 milliseconds = 1 second
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                vibrator.vibrate(1000); // 500 milliseconds
-            }
-        }
 
         //Getting the TextView_Data component via ID - To update with the nearest crime
         CRIME_TYPE = (TextView) findViewById(R.id.Crime_Type_Data);
@@ -103,6 +92,18 @@ public class MainActivity extends AppCompatActivity {
             GO_TO_MAP_BTN.setVisibility(View.INVISIBLE);
             DO_TO_DEBUG.setVisibility(View.INVISIBLE);
             ALERT_MESSAGE.setVisibility(View.VISIBLE);
+
+            //Vibration code
+            Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            if (vibrator.hasVibrator()) {
+                vibrator.vibrate(1500); // 500 milliseconds
+                try {
+                    Thread.sleep(1000); // 1000 milliseconds = 1 second
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                vibrator.vibrate(1000); // 500 milliseconds
+            }
 
             ALERT_MESSAGE.setOnClickListener(new View.OnClickListener() {
                 @Override
