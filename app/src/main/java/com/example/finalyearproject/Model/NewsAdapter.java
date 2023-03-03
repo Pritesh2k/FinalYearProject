@@ -52,10 +52,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
         tvTitle.setText(newsModelArrayList.get(position).getTitle());
         tvPublishAt.setText(newsModelArrayList.get(position).getPublisDate());
         Glide.with(activity).load(newsModelArrayList.get(position).getUrlToImage()).into(img);
-        Log.i("MARDUK URL",newsModelArrayList.get(position).getUrl());
-
-
-
     }
 
     @Override
@@ -68,7 +64,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
         public NewsHolder(@NonNull View itemView,int viewtype) {
             super(itemView);
             tvTitle=itemView.findViewById(R.id.tvTitle);
-            //tvContent=itemView.findViewById(R.id.tvContent);
             tvPublishAt=itemView.findViewById(R.id.tvPublishAt);
             img=itemView.findViewById(R.id.img);
             img.setVisibility(View.GONE);

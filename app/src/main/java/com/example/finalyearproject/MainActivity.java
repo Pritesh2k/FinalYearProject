@@ -38,17 +38,14 @@ public class MainActivity extends AppCompatActivity {
     public static boolean isAlertMessage_ACTIVE = true;
     static  String[] DataCollection;
 
+    //Classes
+    GoogleMaps googleMaps;
+
     @SuppressLint({"WrongThread", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-//        //TO DELETE
-//        Intent intent = new Intent();
-//        intent.setClass(getApplicationContext(), NewsAPI.class);
-//        startActivity(intent);
-//        //
 
         //Considering the state of the Alert Message Pop Up and setting up the Vibration
         ALERT_MESSAGE = (Button) findViewById(R.id.NotificationButton);
@@ -102,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Creating a manual Pop Up Message (MUST incorporate later FULLY along with predication ect...
-            //Improved
         if(isAlertMessage_ACTIVE){
             GO_TO_MAP_BTN.setVisibility(View.INVISIBLE);
             DO_TO_DEBUG.setVisibility(View.INVISIBLE);

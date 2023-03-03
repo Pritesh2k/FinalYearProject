@@ -46,11 +46,18 @@ public class NewsAPI extends AppCompatActivity {
                 new NewsApiClient.ArticlesResponseCallback() {
                     @Override
                     public void onSuccess(ArticleResponse response) {
-                        Log.i("MARDUK",response.getArticles().get(0).getTitle());
 
-                        //add 70 article to newsmoderarraylist
+                        //add 70 article to news moderarraylist
                         for (int i = 0; i < 70 ; i++) {
-                            newsModelArrayList.add(new NewsModel(response.getArticles().get(i).getTitle(),response.getArticles().get(i).getAuthor(),response.getArticles().get(i).getContent(),response.getArticles().get(i).getDescription(),response.getArticles().get(i).getUrl(),response.getArticles().get(i).getPublishedAt(),response.getArticles().get(i).getUrlToImage(),response.getArticles().get(i).getSource().getName()));
+                            newsModelArrayList.add(new NewsModel(response.getArticles()
+                                    .get(i).getTitle(),response.getArticles()
+                                    .get(i).getAuthor(),response.getArticles()
+                                    .get(i).getContent(),response.getArticles()
+                                    .get(i).getDescription(),response.getArticles()
+                                    .get(i).getUrl(),response.getArticles().get(i)
+                                    .getPublishedAt(),response.getArticles().get(i)
+                                    .getUrlToImage(),response.getArticles().get(i)
+                                    .getSource().getName()));
                         }
 
                         //load data to recylerview

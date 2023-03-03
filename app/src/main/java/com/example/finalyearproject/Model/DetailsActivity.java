@@ -59,8 +59,6 @@ public class DetailsActivity extends AppCompatActivity {
         webSettings.setPluginState(WebSettings.PluginState.OFF);
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
-        //   webSettings.setUseWideViewPort(true);//Masaüstü görünümü sağlar.
-//        webSettings.setUserAgentString("Mozilla/5.0 (Linux; Android 10; SM-G970F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3396.81 Mobile Safari/537.36");
         webSettings.setAllowFileAccess(true);
         webSettings.setAllowContentAccess(true);
         webSettings.supportZoom();
@@ -72,7 +70,6 @@ public class DetailsActivity extends AppCompatActivity {
         webSettings.setDatabaseEnabled(true);
 
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
-//        webSettings.setSupportMultipleWindows(true);
         webSettings.setSaveFormData(true);
         webSettings.setSavePassword(true);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED, WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
