@@ -1,20 +1,11 @@
 package com.example.finalyearproject;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
 import android.annotation.SuppressLint;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
@@ -43,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     public static TextView SOURCE;
     public static TextView OUTCOME;
 
+    public boolean updateNearestcrime = false;
+
     //Variable
     public static boolean isAlertMessage_ACTIVE = false;
     static  String[] DataCollection;
@@ -53,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        PoliceData.GetFirebaseDocuments();
+
         //Considering the state of the Alert Message Pop Up and setting up the Vibration
         ALERT_MESSAGE = (Button) findViewById(R.id.NotificationButton);
 
@@ -62,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
         LONGITUDE = (TextView) findViewById(R.id.Longitude_Data);
         LATITUDE = (TextView) findViewById(R.id.Latitude_Data);
         SOURCE = (TextView) findViewById(R.id.Source_Data);
-        OUTCOME = (TextView) findViewById(R.id.Outcome_Data);
 
         //On click listener allowing user to click the button to show map
         GO_TO_MAP_BTN = (Button) findViewById(R.id.CrimeLog_Button);
@@ -132,7 +126,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //Reading from the Firebase DB
-        PoliceData.GetFirebaseDocuments();
+        System.out.println(PoliceData.updateClosestCrime);
+        if (PoliceData.updateClosestCrime){
+            try {
+                PoliceData.readClosestCrimeData();
+            } catch (Exception e){
+                System.out.println(e);
+                Toast.makeText(getApplicationContext(), "An Unexpected Error Occured, Please Re-Load Map", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }

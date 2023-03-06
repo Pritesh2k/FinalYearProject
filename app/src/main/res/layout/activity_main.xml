@@ -105,14 +105,14 @@
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="121dp"
-            android:layout_height="144dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:orientation="vertical"
             android:padding="2dp"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/NearestCrime_Header"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintVertical_bias="0.373"
             tools:visibility="visible">
 
             <TextView
@@ -147,19 +147,11 @@
                 android:fontFamily="sans-serif-medium"
                 android:text="Latitude" />
 
-            <TextView
-                android:id="@+id/Outcome_Header"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:fontFamily="sans-serif-medium"
-                android:text="Outcome" />
-
         </LinearLayout>
 
         <TextView
             android:id="@+id/NearestCrime_Header"
-            android:layout_width="371dp"
+            android:layout_width="0dp"
             android:layout_height="35dp"
             android:layout_marginTop="8dp"
             android:fontFamily="sans-serif-condensed"
@@ -174,14 +166,14 @@
         <LinearLayout
             android:id="@+id/linearLayout3"
             android:layout_width="247dp"
-            android:layout_height="186dp"
-            android:layout_marginEnd="12dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
             android:orientation="vertical"
             android:padding="2dp"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/NearestCrime_Header"
-            app:layout_constraintVertical_bias="0.0">
+            app:layout_constraintVertical_bias="0.595">
 
             <TextView
                 android:id="@+id/Crime_Type_Data"
@@ -217,15 +209,6 @@
                 android:layout_margin="4dp"
                 android:fontFamily="sans-serif-light"
                 android:text="Latitude"
-                android:textAlignment="textEnd" />
-
-            <TextView
-                android:id="@+id/Outcome_Data"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_margin="4dp"
-                android:fontFamily="sans-serif-light"
-                android:text="Outcome"
                 android:textAlignment="textEnd" />
 
             <TextView

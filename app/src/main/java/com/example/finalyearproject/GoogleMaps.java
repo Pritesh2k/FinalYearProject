@@ -9,10 +9,13 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -39,7 +42,6 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
     private static ArrayList<String> Crime = new ArrayList<>();
     private static ArrayList<String> Location_geoPoints = new ArrayList<>();
     public static ArrayList<GeoPoint> Position = new ArrayList<>();
-    static List<CircleOptions> circleList = new ArrayList<>();
 
     static DebugLog debug;
 
@@ -50,7 +52,9 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
     FusedLocationProviderClient fusedLocationProviderClient;
     private static final int REQUEST_CODE = 101;
 
-    private static LatLng USER_CURRENT_LOCATION;
+    public static LatLng USER_CURRENT_LOCATION;
+
+    Button homePage_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +69,7 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        homePage_button = (Button) findViewById(R.id.homepage_button);
     }
 
     /**
@@ -81,7 +86,6 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        mMap.getUiSettings().setZoomControlsEnabled(true);
 
         //Plug the values to create the circle
         LatLng Marker = new LatLng(51.51809, -0.11035);
@@ -90,6 +94,16 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
         WriteDB(mMap);
         updateCurrentLocation();
         enableMyLocation();
+
+        homePage_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PoliceData.updateClosestCrime = true;
+                Intent intent = new Intent();
+                intent.setClass(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void updateCurrentLocation(){
@@ -109,7 +123,7 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
         }
     }
 
-    private void enableMyLocation(){
+    public void enableMyLocation(){
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             if (mMap != null) {
                 mMap.setMyLocationEnabled(true);
@@ -131,7 +145,7 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
                         System.out.println(USER_CURRENT_LOCATION);
 
                         //
-                        CheckCircles(location);
+                        PoliceData.CheckCircles(location);
                     }
                 }
             });
@@ -171,32 +185,15 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
             LatLng geoPosition = new LatLng(Position.get(counter).getLatitude(), Position.get(counter).getLongitude());
             markerOptions.title(Crime.get(counter)).position(geoPosition).snippet(Location_geoPoints.get(counter));
             map.addMarker(markerOptions);
+            PoliceData.markerList.add(markerOptions);
 
             //Add circles
             CircleOptions circleOptions = new CircleOptions()
                     .center(geoPosition)
                     .radius(100)
-                    .fillColor(Color.parseColor("#500084d3"));
+                    .strokeWidth(1.5f);
             map.addCircle(circleOptions);
-            circleList.add(circleOptions);
-        }
-    }
-
-    public static void CheckCircles(Location location) {
-        for (int counter = 0; counter < circleList.size(); counter++) {
-            Location circleLocation = new Location("");
-            circleLocation.setLatitude(circleList.get(counter).getCenter().latitude);
-            circleLocation.setLongitude(circleList.get(counter).getCenter().longitude);
-
-            float distanceInMeters = location.distanceTo(circleLocation);
-
-            if (distanceInMeters <= 100) {
-                // User's location is within 100m of the circle's center
-                System.out.println(circleLocation.getLatitude() + " | " + circleLocation.getLongitude() + " | " + distanceInMeters + " | Dangerous");
-            } else {
-                // User's location is more than 100m away from the circle's center
-                System.out.println(circleLocation.getLatitude() + " | " + circleLocation.getLongitude() + " | " + distanceInMeters);
-            }
+            PoliceData.circleList.add(circleOptions);
         }
     }
 }
