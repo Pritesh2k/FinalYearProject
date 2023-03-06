@@ -272,6 +272,10 @@ public class PoliceData {
     }
 
     static void readClosestCrimeData() {
+        title_read.clear();
+        location_read.clear();
+        lat_read.clear();
+        long_read.clear();
         mainActivity.db.collection("NearestCrime")
                 .document("Closest_Crime")
                 .get()

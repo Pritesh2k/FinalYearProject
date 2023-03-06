@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
     public static TextView LONGITUDE;
     public static TextView LATITUDE;
     public static TextView SOURCE;
-    public static TextView OUTCOME;
 
     public boolean updateNearestcrime = false;
 
@@ -47,9 +46,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         PoliceData.GetFirebaseDocuments();
-
-        //Considering the state of the Alert Message Pop Up and setting up the Vibration
-        ALERT_MESSAGE = (Button) findViewById(R.id.NotificationButton);
 
         //Getting the TextView_Data component via ID - To update with the nearest crime
         CRIME_TYPE = (TextView) findViewById(R.id.Crime_Type_Data);
@@ -81,34 +77,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //Creating a manual Pop Up Message (MUST incorporate later FULLY along with predication ect...
-        if(isAlertMessage_ACTIVE){
-            GO_TO_MAP_BTN.setVisibility(View.INVISIBLE);
-            DO_TO_DEBUG.setVisibility(View.INVISIBLE);
-            ALERT_MESSAGE.setVisibility(View.VISIBLE);
-
-            //Vibration code
-            Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-            if (vibrator.hasVibrator()) {
-                vibrator.vibrate(1500); // 500 milliseconds
-                try {
-                    Thread.sleep(1000); // 1000 milliseconds = 1 second
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                vibrator.vibrate(1000); // 500 milliseconds
+        //Considering the state of the Alert Message Pop Up and setting up the Vibration
+        ALERT_MESSAGE = (Button) findViewById(R.id.NotificationButton);
+        ALERT_MESSAGE.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GO_TO_MAP_BTN.setVisibility(View.VISIBLE);
+                DO_TO_DEBUG.setVisibility(View.VISIBLE);
+                ALERT_MESSAGE.setVisibility(View.INVISIBLE);
             }
-
-            ALERT_MESSAGE.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    GO_TO_MAP_BTN.setVisibility(View.VISIBLE);
-                    DO_TO_DEBUG.setVisibility(View.VISIBLE);
-                    ALERT_MESSAGE.setVisibility(View.INVISIBLE);
-                }
-            });
-            isAlertMessage_ACTIVE = false;
-        }
+        });
 
         //Call someone upon OnClick
         SAFTEY_BTN = (Button) findViewById(R.id.saftey_button);
@@ -126,14 +104,37 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        System.out.println(PoliceData.updateClosestCrime);
+        int vibrationDuration = 1000;
         if (PoliceData.updateClosestCrime){
             try {
                 PoliceData.readClosestCrimeData();
+                GO_TO_MAP_BTN.setVisibility(View.INVISIBLE);
+                DO_TO_DEBUG.setVisibility(View.INVISIBLE);
+                ALERT_MESSAGE.setVisibility(View.VISIBLE);
+                Vibrate(3, vibrationDuration);
             } catch (Exception e){
                 System.out.println(e);
                 Toast.makeText(getApplicationContext(), "An Unexpected Error Occured, Please Re-Load Map", Toast.LENGTH_LONG).show();
             }
         }
     }
+
+    public void vibratePhone(Context context, int durationInMillis) {
+        Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+        if (vibrator.hasVibrator()) {
+            // Vibrate for the specified duration
+            vibrator.vibrate(durationInMillis);
+        } else {
+            // The device does not have a vibrator
+            Toast.makeText(context, "This device does not have a vibrator.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void Vibrate(int itterations, int vibrationDuration) throws InterruptedException {
+        for (int counter = 0; counter < itterations; counter ++) {
+            vibratePhone(getApplicationContext(), vibrationDuration);
+            Thread.sleep(500);
+        }
+    }
+
 }
