@@ -306,7 +306,6 @@ public class PoliceData {
                 });
     }
 
-
     public static void storeReadData(){
         System.out.println(PoliceData.title_read.get(0));
         System.out.println(PoliceData.title_read.size());
@@ -314,7 +313,7 @@ public class PoliceData {
         MainActivity.LOCATION.setText(PoliceData.location_read.get(0));
         MainActivity.LATITUDE.setText(String.valueOf(PoliceData.lat_read.get(0)));
         MainActivity.LONGITUDE.setText(String.valueOf(PoliceData.long_read.get(0)));
-        MainActivity.SOURCE.setText("Police.UK");
+        MainActivity.SOURCE.setText("Data.Police.UK");
         updateClosestCrime = false;
     }
 }
