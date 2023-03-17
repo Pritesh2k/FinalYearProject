@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentActivity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
@@ -34,6 +36,7 @@ import com.google.firebase.firestore.GeoPoint;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
 
@@ -85,7 +88,6 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
 
         //Plug the values to create the circle
         LatLng Marker = new LatLng(51.51809, -0.11035);
@@ -184,6 +186,59 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
             MarkerOptions markerOptions = new MarkerOptions();
             LatLng geoPosition = new LatLng(Position.get(counter).getLatitude(), Position.get(counter).getLongitude());
             markerOptions.title(Crime.get(counter)).position(geoPosition).snippet(Location_geoPoints.get(counter));
+
+            switch (Objects.requireNonNull(markerOptions.getTitle())){
+                //Shades of Blue
+                case "Theft from the person":
+                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                    break;
+                case "Bicycle theft":
+                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                    break;
+                case "Other theft":
+                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
+                    break;
+                case "Robbery":
+                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                    break;
+                case "Burglary":
+                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+                    break;
+
+                    //Shades of Yellow
+                case "Shoplifting":
+                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+                    break;
+                case "Vehicle crime":
+                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+                    break;
+                case "Drugs":
+                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
+                    break;
+
+                    //shades of red
+                case "Anti-social behaviour":
+                    //Red
+                    break;
+                case "Violence and sexual offences":
+                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+                    break;
+                case "Criminal damage and arson":
+                    //Red
+                    break;
+                case "Other crime":
+                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
+                    break;
+                case "Possession of weapons":
+                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                    break;
+                case "Public order":
+                    //Red
+                    break;
+                default:
+                    break;
+            }
+
             map.addMarker(markerOptions);
             PoliceData.markerList.add(markerOptions);
 
