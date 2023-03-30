@@ -5,11 +5,13 @@ import static com.example.finalyearproject.MainActivity.DataCollection;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,6 +24,7 @@ public class DebugLog extends AppCompatActivity {
     public static ArrayList<String> Documents = new ArrayList<String>();
 
     Button DebugToMap;
+    Button SAFTEY_BTN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,22 @@ public class DebugLog extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setClass(getApplicationContext(), GoogleMaps.class);
                 startActivity(intent);
+            }
+        });
+
+        //Call someone upon OnClick
+        SAFTEY_BTN = (Button) findViewById(R.id.saftey_button);
+        SAFTEY_BTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Creating new intent and establishing the data
+                try {
+                    //Making the call
+                    Intent safteyButton_Intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:999"));
+                    startActivity(safteyButton_Intent);
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "Call UnSuccessful", Toast.LENGTH_LONG).show();
+                }
             }
         });
 

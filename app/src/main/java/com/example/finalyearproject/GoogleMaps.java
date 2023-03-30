@@ -157,23 +157,23 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
     }
 
     private void WriteDB(GoogleMap map) {
-
+        //Initialising pointers for each column in the data array
         int CrimePointer = 0;
         int LocationPointer = 1;
         int LongitudePointer = 2;
         int LatitudePointer = 3;
         int OutcomePointer = 4;
-
+        //Iterating through each crime and its values
         while (OutcomePointer < getDataArray.size()){
-
+            //Checking for empty values
             if (!getDataArray.get(CrimePointer).equals("") || !getDataArray.get(LocationPointer).equals("No Location")
             || !getDataArray.get(LongitudePointer).equals("") || !getDataArray.get(LatitudePointer).equals("")) {
-
+                //if all the required values are available, then it is added to their respected arraylists
                 Crime.add(getDataArray.get(CrimePointer));
                 Location_geoPoints.add(getDataArray.get(LocationPointer));
                 GeoPoint geoPoint = new GeoPoint(Double.parseDouble(getDataArray.get(LatitudePointer)), Double.parseDouble(getDataArray.get(LongitudePointer)));
                 Position.add(geoPoint);
-
+                //Incrementing pointer by 6 to fetch the next value (5 values away from the current position + 1 due to an empty space in the text view)
                 CrimePointer += 6;
                 LocationPointer += 6;
                 LongitudePointer += 6;
@@ -181,14 +181,14 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
                 OutcomePointer += 6;
             }
         }
-
+        //iterating through each Crime, fetching its values from the other arraylists
         for (int counter = 0; counter < Crime.size(); counter++){
+            //Assigning the crime and its values to the Marker and its properties
             MarkerOptions markerOptions = new MarkerOptions();
             LatLng geoPosition = new LatLng(Position.get(counter).getLatitude(), Position.get(counter).getLongitude());
             markerOptions.title(Crime.get(counter)).position(geoPosition).snippet(Location_geoPoints.get(counter));
-
+            //Switch case checking the crime and appointing a colour to the marker
             switch (Objects.requireNonNull(markerOptions.getTitle())){
-                //Shades of Blue
                 case "Theft from the person":
                     markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
                     break;
@@ -204,8 +204,6 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
                 case "Burglary":
                     markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
                     break;
-
-                    //Shades of Yellow
                 case "Shoplifting":
                     markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
                     break;
@@ -215,8 +213,6 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
                 case "Drugs":
                     markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
                     break;
-
-                    //shades of red
                 case "Anti-social behaviour":
                     //Red
                     break;
@@ -238,7 +234,7 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
                 default:
                     break;
             }
-
+            //Adding marker to map
             map.addMarker(markerOptions);
             PoliceData.markerList.add(markerOptions);
 

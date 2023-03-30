@@ -33,7 +33,7 @@
             android:layout_margin="2dp"
             android:layout_weight="1"
             android:backgroundTint="#BF4040"
-            android:text="SAFTEY BUTTON" />
+            android:text="SAFETY BUTTON" />
 
     </LinearLayout>
 

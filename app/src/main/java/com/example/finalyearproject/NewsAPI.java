@@ -36,10 +36,10 @@ public class NewsAPI extends AppCompatActivity {
         recyclerView=findViewById(R.id.recyclerView);
         newsModelArrayList=new ArrayList<>();//create custom arraylist
         newsApiClient= new NewsApiClient("8ec91d84acb44334963439c4c7b027c3");
-
+        String searchQuery = "north+west+london+crime";
         newsApiClient.getEverything(
                 new EverythingRequest.Builder()
-                        .q("crime+in+london")
+                        .q(searchQuery)
                         .language("en")
                         .sortBy("publishedAt")
                         .build(),

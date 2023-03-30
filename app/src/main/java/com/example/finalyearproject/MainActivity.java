@@ -21,8 +21,11 @@ public class MainActivity extends AppCompatActivity {
     public static FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     //Referencing Button Components
+    //Reference to Map
     Button GO_TO_MAP_BTN;
+    //Reference to Map
     Button DO_TO_DEBUG;
+    //Reference to Safety Button
     Button SAFTEY_BTN;
     Button ALERT_MESSAGE;
 
@@ -35,8 +38,6 @@ public class MainActivity extends AppCompatActivity {
 
     public boolean updateNearestcrime = false;
 
-    //Variable
-    public static boolean isAlertMessage_ACTIVE = false;
     static  String[] DataCollection;
 
     @SuppressLint({"WrongThread", "MissingInflatedId"})

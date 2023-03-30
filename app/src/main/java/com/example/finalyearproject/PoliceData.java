@@ -189,7 +189,8 @@ public class PoliceData {
 
     public static void GetFirebaseDocuments() {
         //Reading from the Firebase DB
-        mainActivity.db.collection("November-2022")
+        String collectionName = "November-2022";
+        mainActivity.db.collection(collectionName)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -211,27 +212,26 @@ public class PoliceData {
 
     public static void CheckCircles(Location location) {
         float closestDistance = 900000;
-
+        int circleRange = 100; //In Meters
+        //Iterating through each crime on the map
         for (int counter = 0; counter < circleList.size(); counter++) {
             Location circleLocation = new Location("");
             circleLocation.setLatitude(circleList.get(counter).getCenter().latitude);
             circleLocation.setLongitude(circleList.get(counter).getCenter().longitude);
 
             float distanceInMeters = location.distanceTo(circleLocation);
-
+            //Calculating the closest distance from each marker
             if (distanceInMeters < closestDistance) {
                 closestDistance = distanceInMeters;
             }
 
-            if (distanceInMeters <= 100) {
+            if (distanceInMeters <= circleRange) {
                 // User's location is within 100m of the circle's center
                 System.out.println(circleLocation.getLatitude() + " | " + circleLocation.getLongitude() + " | " + distanceInMeters + " | Dangerous");
                 System.out.println(markerList.get(counter).getTitle());
                 System.out.println(markerList.get(counter).getSnippet());
 
                 addNearestCrimeToCollection(markerList.get(counter).getTitle(), markerList.get(counter).getSnippet(), circleLocation.getLatitude(), circleLocation.getLongitude());
-
-                //Alert user
 
             } else {
                 // User's location is more than 100m away from the circle's center

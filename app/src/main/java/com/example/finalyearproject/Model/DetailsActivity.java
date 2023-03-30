@@ -40,8 +40,8 @@ public class DetailsActivity extends AppCompatActivity {
         webview.setWebViewClient(new WebViewClient());
         webview.setWebChromeClient(new WebChromeClient());
         webview.loadUrl(getIntent().getExtras().getString("URL"));
-
     }
+
     /*Webview settings.*/
     public void setWebSettings(WebSettings webSettings) {
         this.webSettings = webSettings;

@@ -56,7 +56,7 @@
             android:id="@+id/CrimeLog_Button"
             android:layout_width="150dp"
             android:layout_height="200dp"
-            android:text="Load Crime"
+            android:text="Load Crime + Map"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@+id/MapBackground"
             app:layout_constraintEnd_toEndOf="@+id/MapBackground"
@@ -78,8 +78,7 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/MapBackground"
-            app:layout_constraintVertical_bias="0.0"
-            tools:visibility="invisible" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -98,7 +97,7 @@
                 android:layout_margin="2dp"
                 android:layout_weight="1"
                 android:backgroundTint="#BF4040"
-                android:text="SAFTEY BUTTON" />
+                android:text="SAFETY BUTTON" />
 
         </LinearLayout>
 
@@ -112,8 +111,7 @@
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/NearestCrime_Header"
-            app:layout_constraintVertical_bias="0.144"
-            tools:visibility="visible">
+            app:layout_constraintVertical_bias="0.144">
 
             <TextView
                 android:id="@+id/Crime_Type_Header"
